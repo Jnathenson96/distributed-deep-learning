@@ -1,0 +1,1 @@
+Compiler Command: aoc aocl.cl -Dcl_khr_fp64 -march=emulator
