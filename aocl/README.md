@@ -4,15 +4,14 @@ This section of distributed-deep-learning is a compository of all research and t
 
 ## Getting Started
 
-1) Navigate to your FPGA directory and run setup scripts
-> for edge-1 machine see /home/tools/altera/17.1-pro/hld/init_opencl.sh
-
 ### Prerequisites
 
 1) Build and install TVM with AOCL, OpenCL, and LLVM enabled
 > see https://docs.tvm.ai/install/from_source.html
 2) Install FPGA device driver
 3) Install BSP for FPGA
+4) Navigate to your FPGA directory and run setup scripts
+> for edge-1 machine see /home/tools/altera/17.1-pro/hld/init_opencl.sh
 
 ### Installing
 
