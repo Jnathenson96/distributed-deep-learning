@@ -11,7 +11,10 @@ This section of distributed-deep-learning is a compository of all research and t
 2) Install FPGA device driver
 3) Install BSP for FPGA
 4) Navigate to your FPGA directory and run setup scripts
+> for edge-1 machine see /home/tools/altera/Intel_FPGA_Setup.csh and /home/tools/altera/Altera_Setup.csh
+5) Set opencl paths
 > for edge-1 machine see /home/tools/altera/17.1-pro/hld/init_opencl.sh
+
 
 ### Installing
 
