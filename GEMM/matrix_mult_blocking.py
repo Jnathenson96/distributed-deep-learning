@@ -41,14 +41,7 @@ C = tvm.compute(
            lambda x, y: tvm.sum(A[x, k] * B[k, y], axis=k),
            name='C')
 
-################################################################################################
-# Blocking
-# --------
-# A important trick to enhance the cache hit rate is blocking --- data chunk will be computed
-# block by block. The memory access inside the block is a small neighbourhood which is with high
-# memory locality. In this tutorial, I picked up 32 as the blocking factor. So the block will
-# fill 32 * 32 * sizeof(float) which is 4KB in the cache whose total size is 32KB (L1 data cache)
-
+# optimize MM using blocking
 bn = 32
 s = tvm.create_schedule(C.op)
 
@@ -67,12 +60,9 @@ c = tvm.nd.array(numpy.zeros((M, N), dtype = dtype), ctx)
 func(a, b, c)
 tvm.testing.assert_allclose(c.asnumpy(), answer, rtol=1e-5)
 
-# By simply tiling the loop 32x32, and hoisting ko, ki outside the blocking loops,
-# we can see big speedup compared with the baseline.
 evaluator = func.time_evaluator(func.entry_name, ctx, number=10)
 print('Opt1: %f' % evaluator(a, b, c).mean)
 
-################################################################################################
-# Here is the generated IR after blocking.
+#  generated IR after blocking.
 
 print(tvm.lower(s, [A, B, C], simple_mode=True))

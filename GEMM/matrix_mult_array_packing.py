@@ -4,7 +4,6 @@ import timeit
 
 # The size of the matrix
 # (M, K) x (K, N)
-# You are free to try out different shapes, sometimes TVM optimization outperforms numpy with MKL.
 M = 1024
 K = 1024
 N = 1024
@@ -12,13 +11,11 @@ N = 1024
 # The default tensor type in tvm
 dtype = "float32"
 
-# using Intel AVX2(Advanced Vector Extensions) ISA for SIMD
-# To get the best performance, please change the following line
-# to llvm -mcpu=core-avx2, or specific type of CPU you use
+# set target
 target = 'llvm'
 ctx = tvm.context(target, 0)
 
-# Random generated tensor for testing
+# generate random tensors for testing purposes
 a = tvm.nd.array(numpy.random.rand(M, K).astype(dtype), ctx)
 b = tvm.nd.array(numpy.random.rand(K, N).astype(dtype), ctx)
 
@@ -74,8 +71,7 @@ tvm.testing.assert_allclose(c.asnumpy(), answer, rtol=1e-5)
 evaluator = func.time_evaluator(func.entry_name, ctx, number=10)
 print('Opt4: %f' % evaluator(a, b, c).mean)
 
-################################################################################################
-# Here is the generated IR after array packing.
+# generated IR after array packing.
 
 print(tvm.lower(s, [A, B, C], simple_mode=True))
 

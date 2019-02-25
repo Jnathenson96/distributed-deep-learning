@@ -4,6 +4,7 @@ import tvm
 import numpy
 import timeit 
 
+# A basic, non-optimized implementation of matrix multiplication in TVM
 
 # Matrix dimensions
 # (M, K) x (K, N)

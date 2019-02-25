@@ -4,7 +4,6 @@ import timeit
 
 # The size of the matrix
 # (M, K) x (K, N)
-# You are free to try out different shapes, sometimes TVM optimization outperforms numpy with MKL.
 M = 1024
 K = 1024
 N = 1024
@@ -12,9 +11,6 @@ N = 1024
 # The default tensor type in tvm
 dtype = "float32"
 
-# using Intel AVX2(Advanced Vector Extensions) ISA for SIMD
-# To get the best performance, please change the following line
-# to llvm -mcpu=core-avx2, or specific type of CPU you use
 target = 'llvm'
 ctx = tvm.context(target, 0)
 
@@ -45,15 +41,7 @@ C = tvm.compute(
            lambda x, y: tvm.sum(A[x, k] * B[k, y], axis=k),
            name='C')
 
-
-###################################################################################################
-# Vectorization
-# -------------
-# Another important trick is vectorization. When the memory access pattern is uniform,
-# the compiler can detect this pattern and pass the continuous memory to vector processor. In TVM,
-# we can use `vectorize` interface to hint the compiler this pattern, so that we can accelerate it vastly.
-#
-# In this tutorial, we chose to vectorize the inner loop row data since it is cache friendly.
+# optmize MM using vectorization
 bn = 32
 s = tvm.create_schedule(C.op)
 xo, yo, xi, yi = s[C].tile(C.op.axis[0], C.op.axis[1], bn, bn)
@@ -75,7 +63,6 @@ tvm.testing.assert_allclose(c.asnumpy(), answer, rtol=1e-5)
 evaluator = func.time_evaluator(func.entry_name, ctx, number=10)
 print('Opt2: %f' % evaluator(a, b, c).mean)
 
-################################################################################################
-# Here is the generated IR after vectorization.
+# generated IR after vectorization.
 
 print(tvm.lower(s, [A, B, C], simple_mode=True))
