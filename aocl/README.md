@@ -1,6 +1,6 @@
 # TVM/AOCL Research Division
 
-This section of distributed-deep-learning is a compository of all research and testing pertaining to the AOCL backend of TVM. Current version supports generating AOCL code for vector addition to be run on an Intel a10gx FPGA.
+This section of distributed-deep-learning is a compository of all research and testing pertaining to the AOCL backend of TVM. Current version supports generating AOCL code for vector addition to be run on a nalla_pcie FPGA.
 
 ## Getting Started
 
@@ -10,11 +10,8 @@ This section of distributed-deep-learning is a compository of all research and t
 > see https://docs.tvm.ai/install/from_source.html
 2) Install FPGA device driver
 3) Install BSP for FPGA
-4) Navigate to your FPGA directory and run setup scripts
-> for edge-1 machine see /home/tools/altera/Intel_FPGA_Setup.csh and /home/tools/altera/Altera_Setup.csh
-5) Set opencl paths
-> for edge-1 machine see /home/tools/altera/17.1-pro/hld/init_opencl.sh
-
+4) Configure paths for OpenCL and the FPGA
+> for edge-1 machine navigate to /home/user/jnathens and run ```source .bashrc```
 
 ### Installing
 
@@ -25,10 +22,10 @@ To run the vector addition simply navigate to aocl directory and enter
 
 To switch between the FPGA emulator and actual FPGA device you can change the ```target``` within both run.py and build.py
 - for tests using the emulator set ```tgt="aocl_sw_emu"```
-- for tests using physical FPGA set ```tgt="aocl -device=a10gx"``` or respective device name 
+- for tests using physical FPGA set ```tgt="aocl -device="``` or respective device name 
 
 Then modify run.sh
-- for tests using the emulator set ```"export CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=1"```
+- for tests using the emulator set ```"export CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=nalla_pcie"```
 - for tests using physical FPGA set ```unset CL_CONTEXT_EMULATOR_DEVICE_FGPA``` (only necessary if previously ran run.sh with emulator settings) 
 
 ### Break down into end to end tests
