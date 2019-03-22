@@ -1,6 +1,6 @@
 # TVM/AOCL Research Division
 
-This section of distributed-deep-learning is a compository of all research and testing pertaining to the AOCL backend of TVM. Current version supports generating AOCL code for vector addition to be run on a nalla_pcie FPGA.
+This section of distributed-deep-learning is a compository of all research and testing pertaining to the AOCL backend of TVM. Current version supports generating AOCL code for vector addition and vector matrix multiplication to be run on a nalla_pcie FPGA.
 
 ## Getting Started
 
@@ -17,31 +17,31 @@ This section of distributed-deep-learning is a compository of all research and t
 
 ## Running the tests
 
-To run the vector addition simply navigate to aocl directory and enter
+To run the precompiled module simply navigate to desired directory and enter
 ``` source run.sh ```
 
 To switch between the FPGA emulator and actual FPGA device you can change the ```target``` within both run.py and build.py
-- for tests using the emulator set ```tgt="aocl_sw_emu"```
-- for tests using physical FPGA set ```tgt="aocl -device="``` or respective device name 
+- for tests using the emulator set ```"aocl_sw_emu"```
+- for tests using physical FPGA set ```tgt="aocl -device="``` with respective device name 
 
 Then modify run.sh
 - for tests using the emulator set ```"export CL_CONTEXT_EMULATOR_DEVICE_INTELFPGA=nalla_pcie"```
 - for tests using physical FPGA set ```unset CL_CONTEXT_EMULATOR_DEVICE_FGPA``` (only necessary if previously ran run.sh with emulator settings) 
 
 ### Break down into end to end tests
-To test whether the TVM AOCL backend is even functioning, run run.sh with build.py, run.py, and run.sh configued to target the emulator. If TVM is built and configured correctly, AOCL code for vector addition will be output, verifying all functionality.
+To test whether the TVM AOCL backend is even functioning, execute the following scripts: run.sh with build.py, run.py, and run.sh configued to target the emulator. If TVM is built and configured correctly, AOCL code will be output, verifying all functionality.
 
 
 ## Deployment
 
 For difficulties deploying on physical FPGA verify that
 - An ICD file exists so that the OpenCL platform can be found.
-> for edge-1 see /home/tools/altera/17.1-pro/hld/linux64/lib/libalteracl.so
+> for edge-1 see /home/tools/altera/18.1-pro/hld/linux64/lib/libalteracl.so
 - An FCD file exists so that your FPGA device can be found.
-> for edge-1 see /home/tools/altera/17.1-pro/hld/board/a10_ref/linux64/lib/libaltera_a10_ref_mmd.so
+> for edge-1 see /home/tools/altera/18.1-pro/hld/board/a10_ref/linux64/lib/libaltera_a10_ref_mmd.so
 
 ## Built With
-TVM 0.5.dev
+TVM 0.6.dev
 
 ## Contributing
 
@@ -49,7 +49,7 @@ TVM 0.5.dev
 ## Versioning
 
 (Version 1.0) AOCL vector addition
-
+(Version 1.1) Vector Matrix Multiplication addition
 ## Authors
 Jared Nathenson (https://github.com/Jnathenson96)
 
