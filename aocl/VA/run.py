@@ -3,7 +3,7 @@ import numpy as np
 import os
 
 tgt="aocl_sw_emu"
-#tgt="aocl -device=a10gx"
+#tgt="aocl -device=p385a_sch_ax115"
 
 fadd = tvm.module.load("myadd.so")
 fadd_dev = tvm.module.load("myadd.aocx")

@@ -2,7 +2,7 @@ import tvm
 
 tgt_host="llvm"
 tgt="aocl_sw_emu"
-#tgt="aocl -device=a10gx"
+#tgt="aocl -device=p385a_sch_ax115"
 
 n = tvm.var("n")
 A = tvm.placeholder((n,), name='A')

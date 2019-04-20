@@ -4,18 +4,16 @@ tgt_host="llvm"
 #tgt="aocl_sw_emu"
 tgt="aocl -device=p385a_sch_ax115"
 
-M = 1024 #MxM for matrix, MxK for vector
-K = 1024
-N = 1
+M = 1024  #MxM for matrix, MxK for vector
 
-# Algorithm
-k = tvm.reduce_axis((0, K), 'k')
-A = tvm.placeholder((M, K), name='A')
-B = tvm.placeholder((K, N), name='B')
-C = tvm.compute(
-           (M, N),
-           lambda x, y: tvm.sum(A[x, k] * B[k, y], axis=k),
-           name='C')
+#A = tvm.placeholder((n,), name='A')
+#B = tvm.placeholder((n,), name='B')
+#C = tvm.compute(A.shape, lambda i: A[i] + B[i], name="C")
+m = tvm.reduce_axis((0, M), 'm')
+B = tvm.placeholder((M,M), name='B') #3x3 matrix
+A = tvm.placeholder((M,), name='A') #vector
+
+C = tvm.compute(A.shape, lambda x: tvm.sum(B[x,m] * A[m], axis=m), name='C')
 
 s = tvm.create_schedule(C.op)
 px, x = s[C].split(C.op.axis[0], nparts=1)
