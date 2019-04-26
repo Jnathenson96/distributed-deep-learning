@@ -1,0 +1,13 @@
+1. Use the instructions on the tvm repository at apps/android_deploy to compile the demo android app. YOU MUST USE JAVA 8 for this step or it will not wwork. You should be able to run the demo app after this (otherwise contact me with problems)
+
+2. Comment out the line in android_deploy/app/build.gradle that applies the download-assets plugin
+
+3. Generate the cross compilier using the android-ndk. A line that works for this is on the android_deploy README under cross compile and run on android devices (using the android-ndk make-standalone-toolchain.sh)
+
+4. In deploy_model_on_android.py there is a hard-coded path to cc="..." Change that to match the path on your system (if you use the line in the tvm readme I believe it goes to the same place)
+
+5. run deploy_model_on_android.py. Ignore some of the comments in that script because it was modified from a script to generate models for the raspberry pi. It will generate models in a directory ./tmp/. Copy everything in that directory to tvm/apps/android_deploy/app/src/main/assets . You must keep in that directory the imagenet.shortnames.list
+
+in tvm/apps/android_deploy/app/src/main/jni there is a file Application.mk. You must modify in that file the line "APP_STL:=..." to "APP_STL := c++_shared"
+
+use "gradle clean build" to build the apk. Hopefully it works.

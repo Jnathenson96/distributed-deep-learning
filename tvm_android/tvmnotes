@@ -1,0 +1,6 @@
+# original notes I made. The steps should be listed in the README, but these sum up what needs to be done to take the demo and compile a different model for it
+disable model download
+install toolchain
+use cc=toolchain
+make application use c++_shared
+use compile target arm64-linux-android
